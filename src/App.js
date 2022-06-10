@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from "@material-ui/core";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Homepage from "./pages/Homepage";
+import Coinpage from "./pages/Coinpage";
+import { makeStyles } from "@material-ui/styles";
+import "./App.css";
+import CryptoContext from "./CrytoContext";
+import theme from "./helpers/theme";
+
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: "#14161a",
+    color: "white",
+    minHeight: "100vh",
+  },
+});
 
 function App() {
+  const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CryptoContext>
+        <div className={classes.root}>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/coins/:id" element={<Coinpage />} />
+          </Routes>
+        </div>
+      </CryptoContext>
+    </ThemeProvider>
   );
 }
 
